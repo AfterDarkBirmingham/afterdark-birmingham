@@ -193,5 +193,10 @@ def checkout(bid):
 @app.get('/health')
 def health():return jsonify(ok=True,service='AFTERDARK Birmingham')
 
+# Initialise the database when the app is imported by Gunicorn/Render.
+# (Gunicorn does not execute the __main__ block.)
+init_db()
+seed_directory()
+
 if __name__=='__main__':
-    init_db(); seed_directory(); app.run(host='0.0.0.0',port=int(os.environ.get('PORT','5000')))
+    app.run(host='0.0.0.0',port=int(os.environ.get('PORT','5000')))
